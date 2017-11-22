@@ -21,15 +21,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oom-pQ-gsj">
-                                <rect key="frame" x="151" y="378" width="133" height="89"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oom-pQ-gsj">
+                                <rect key="frame" x="121" y="583" width="133" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="133" id="fjw-LD-mTV"/>
+                                    <constraint firstAttribute="height" constant="64" id="ql6-lC-R65"/>
+                                </constraints>
                                 <state key="normal" title="Button" image="love">
                                     <color key="titleColor" red="0.96078431369999995" green="0.30196078430000001" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="oom-pQ-gsj" secondAttribute="bottom" constant="20" id="2js-tk-1Hm"/>
+                            <constraint firstItem="oom-pQ-gsj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="An3-es-bFb"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -209,6 +209,8 @@
 //起始x
 - (CGFloat)startLeft{
     CGFloat left = (self.contentView.bounds.size.width - (self.titleSize.width + self.imageSize.width + self.imageEdgeInsets.left + self.titleEdgeInsets.left))/2.0f;
+    NSLog(@"%.3f",left);
+
     return left;
 }
 
@@ -224,6 +226,8 @@
                                                           options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin
                                                        attributes:@{NSFontAttributeName:self.titleFont}
                                                           context:nil].size;
+    NSLog(@"--%.3f",titleSize.width);
+
     return titleSize;
 }
 
@@ -232,6 +236,8 @@
     if (self.arrangeType == DGButtonArrangeTypeTitleInFrontOfTheImage ||
         self.arrangeType == DGButtonArrangeTypeImageInFrontOfTheTitle) {
         CGFloat width = self.contentView.bounds.size.width - self.imageSize.width;
+        NSLog(@"++%.3f",width);
+
         if (width >0)return width;
         return 0;
     }
