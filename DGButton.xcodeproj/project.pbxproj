@@ -7,15 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		995F98FF2556521522C1A2CB /* Pods_DGButton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A26FB2CD1B62D622F2D09F7 /* Pods_DGButton.framework */; };
 		C36336371FC50BA500EECA54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C36336361FC50BA500EECA54 /* main.m */; };
 		C363363A1FC50BA500EECA54 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C36336391FC50BA500EECA54 /* AppDelegate.m */; };
 		C363363D1FC50BA500EECA54 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C363363C1FC50BA500EECA54 /* ViewController.m */; };
 		C36336401FC50BA500EECA54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C363363E1FC50BA500EECA54 /* Main.storyboard */; };
 		C36336421FC50BA500EECA54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C36336411FC50BA500EECA54 /* Assets.xcassets */; };
 		C36336451FC50BA500EECA54 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C36336431FC50BA500EECA54 /* LaunchScreen.storyboard */; };
+		C363364F1FC50D2E00EECA54 /* DGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C363364E1FC50D2E00EECA54 /* DGButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7A26FB2CD1B62D622F2D09F7 /* Pods_DGButton.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DGButton.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BACDED58468F47B4B0973E27 /* Pods-DGButton.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DGButton.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DGButton/Pods-DGButton.debug.xcconfig"; sourceTree = "<group>"; };
 		C36336321FC50BA500EECA54 /* DGButton.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DGButton.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C36336361FC50BA500EECA54 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C36336381FC50BA500EECA54 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -26,6 +30,9 @@
 		C36336411FC50BA500EECA54 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C36336441FC50BA500EECA54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C36336461FC50BA500EECA54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C363364D1FC50D2E00EECA54 /* DGButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGButton.h; sourceTree = "<group>"; };
+		C363364E1FC50D2E00EECA54 /* DGButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGButton.m; sourceTree = "<group>"; };
+		D0E82ACCDF3B2FBAE961E23F /* Pods-DGButton.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DGButton.release.xcconfig"; path = "Pods/Target Support Files/Pods-DGButton/Pods-DGButton.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +40,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				995F98FF2556521522C1A2CB /* Pods_DGButton.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8C07305821CD50A992D90BB6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7A26FB2CD1B62D622F2D09F7 /* Pods_DGButton.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C36336291FC50BA400EECA54 = {
 			isa = PBXGroup;
 			children = (
 				C36336341FC50BA500EECA54 /* DGButton */,
 				C36336331FC50BA500EECA54 /* Products */,
+				F7C1F6E9744EC93D3A11E499 /* Pods */,
+				8C07305821CD50A992D90BB6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,14 +76,7 @@
 		C36336341FC50BA500EECA54 /* DGButton */ = {
 			isa = PBXGroup;
 			children = (
-				C36336381FC50BA500EECA54 /* AppDelegate.h */,
-				C36336391FC50BA500EECA54 /* AppDelegate.m */,
-				C363363B1FC50BA500EECA54 /* ViewController.h */,
-				C363363C1FC50BA500EECA54 /* ViewController.m */,
-				C363363E1FC50BA500EECA54 /* Main.storyboard */,
-				C36336411FC50BA500EECA54 /* Assets.xcassets */,
-				C36336431FC50BA500EECA54 /* LaunchScreen.storyboard */,
-				C36336461FC50BA500EECA54 /* Info.plist */,
+				C363364C1FC50C2600EECA54 /* DGButtonSDK */,
 				C36336351FC50BA500EECA54 /* Supporting Files */,
 			);
 			path = DGButton;
@@ -74,9 +85,35 @@
 		C36336351FC50BA500EECA54 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C36336381FC50BA500EECA54 /* AppDelegate.h */,
+				C36336391FC50BA500EECA54 /* AppDelegate.m */,
+				C363363B1FC50BA500EECA54 /* ViewController.h */,
+				C363363C1FC50BA500EECA54 /* ViewController.m */,
+				C363363E1FC50BA500EECA54 /* Main.storyboard */,
+				C36336411FC50BA500EECA54 /* Assets.xcassets */,
+				C36336431FC50BA500EECA54 /* LaunchScreen.storyboard */,
+				C36336461FC50BA500EECA54 /* Info.plist */,
 				C36336361FC50BA500EECA54 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C363364C1FC50C2600EECA54 /* DGButtonSDK */ = {
+			isa = PBXGroup;
+			children = (
+				C363364D1FC50D2E00EECA54 /* DGButton.h */,
+				C363364E1FC50D2E00EECA54 /* DGButton.m */,
+			);
+			path = DGButtonSDK;
+			sourceTree = "<group>";
+		};
+		F7C1F6E9744EC93D3A11E499 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BACDED58468F47B4B0973E27 /* Pods-DGButton.debug.xcconfig */,
+				D0E82ACCDF3B2FBAE961E23F /* Pods-DGButton.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,9 +123,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C36336491FC50BA500EECA54 /* Build configuration list for PBXNativeTarget "DGButton" */;
 			buildPhases = (
+				9E6BEC17D96CDB9D274778CB /* [CP] Check Pods Manifest.lock */,
 				C363362E1FC50BA400EECA54 /* Sources */,
 				C363362F1FC50BA400EECA54 /* Frameworks */,
 				C36336301FC50BA400EECA54 /* Resources */,
+				F098EE013F78ED2FBF2F6E8A /* [CP] Embed Pods Frameworks */,
+				6B83643089328EF9DA525258 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -145,11 +185,66 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6B83643089328EF9DA525258 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DGButton/Pods-DGButton-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9E6BEC17D96CDB9D274778CB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DGButton-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F098EE013F78ED2FBF2F6E8A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-DGButton/Pods-DGButton-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DGButton/Pods-DGButton-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C363362E1FC50BA400EECA54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C363364F1FC50D2E00EECA54 /* DGButton.m in Sources */,
 				C363363D1FC50BA500EECA54 /* ViewController.m in Sources */,
 				C363363A1FC50BA500EECA54 /* AppDelegate.m in Sources */,
 				C36336371FC50BA500EECA54 /* main.m in Sources */,
@@ -270,6 +365,7 @@
 		};
 		C363364A1FC50BA500EECA54 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BACDED58468F47B4B0973E27 /* Pods-DGButton.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = DGButton/Info.plist;
@@ -281,6 +377,7 @@
 		};
 		C363364B1FC50BA500EECA54 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D0E82ACCDF3B2FBAE961E23F /* Pods-DGButton.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = DGButton/Info.plist;
@@ -309,6 +406,7 @@
 				C363364B1FC50BA500EECA54 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

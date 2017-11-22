@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "DGButton.h"
 
 @interface ViewController ()
 
@@ -16,14 +17,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    DGButton * button = [DGButton buttonArrangeType:DGButtonArrangeTypeTitleInFrontOfTheImage];
+    button.frame = CGRectMake(100, 200, 100, 80);
+    [button setTitle:@"DGButton" forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"love"] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    button.imageSize = CGSizeMake(20, 20);
+    button.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    button.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    [button addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+    button.layer.borderWidth = 1.0f;
+    
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)btnAction:(DGButton *)sender{
+    
 }
-
 
 @end
