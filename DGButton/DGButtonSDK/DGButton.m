@@ -9,12 +9,13 @@
 #import "DGButton.h"
 #import "Masonry.h"
 
-
 @interface DGButton()
 
-@property (strong , nonatomic)NSMutableDictionary * stateImages;
-@property (strong , nonatomic)NSMutableDictionary * stateTitles;
-@property (strong , nonatomic)NSMutableDictionary * stateTitleColors;
+@property (strong , nonatomic)NSMutableDictionary <NSNumber * , UIImage  *>* stateImages;
+@property (strong , nonatomic)NSMutableDictionary <NSNumber * , NSString *>* stateTitles;
+@property (strong , nonatomic)NSMutableDictionary <NSNumber * , UIColor  *>* stateTitleColors;
+@property (strong , nonatomic)NSMutableDictionary <NSNumber * , UIColor  *>* stateBackgroundColors;
+@property (strong , nonatomic)NSMutableDictionary <NSNumber * , NSAttributedString *> *stateAttributedStrings;
 
 @property (strong , nonatomic)UIImageView * imageView;
 @property (strong , nonatomic)UILabel * titleLabel;
@@ -43,9 +44,12 @@
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        self.stateImages = @{}.mutableCopy;
-        self.stateTitles = @{}.mutableCopy;
-        self.stateTitleColors = @{}.mutableCopy;
+        //默认属性
+        self.stateImages            = @{@(UIControlStateNormal):[UIImage new]}.mutableCopy;
+        self.stateTitles            = @{@(UIControlStateNormal):@""}.mutableCopy;
+        self.stateTitleColors       = @{@(UIControlStateNormal):[UIColor cyanColor]}.mutableCopy;
+        self.stateBackgroundColors  = @{@(UIControlStateNormal):[UIColor whiteColor]}.mutableCopy;
+        self.stateAttributedStrings = @{}.mutableCopy;
         self.touchAnimationDuration = -1;
     }
     return self;
@@ -163,7 +167,7 @@
     }];
     
     [self.titleLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.width.lessThanOrEqualTo(@([self maxTitleWidth]));
+        make.width.lessThanOrEqualTo(@([self titleSize].width+2));
     }];
     
 }
@@ -173,7 +177,6 @@
     if (!_contentView) {
         _contentView = [UIView new];
         _contentView.clipsToBounds = YES;
-        _contentView.autoresizingMask = UIViewAutoresizingNone;
         _contentView.userInteractionEnabled = NO;
         [self addSubview:_contentView];
     }
@@ -193,6 +196,7 @@
         _titleLabel = [UILabel new];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.font = self.titleFont;
+        _titleLabel.textColor = self.stateTitleColors[@(UIControlStateNormal)];
         [self.contentView addSubview:_titleLabel];
     }
     return _titleLabel;
@@ -209,8 +213,6 @@
 //起始x
 - (CGFloat)startLeft{
     CGFloat left = (self.contentView.bounds.size.width - (self.titleSize.width + self.imageSize.width + self.imageEdgeInsets.left + self.titleEdgeInsets.left))/2.0f;
-    NSLog(@"%.3f",left);
-
     return left;
 }
 
@@ -222,12 +224,10 @@
 
 //title内容大小
 - (CGSize)titleSize{
-    CGSize titleSize = [self.titleLabel.text boundingRectWithSize:CGSizeMake(self.maxTitleWidth, 20)
+    CGSize titleSize = [self.titleLabel.text boundingRectWithSize:CGSizeMake(self.maxTitleWidth, self.titleFont.lineHeight)
                                                           options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin
                                                        attributes:@{NSFontAttributeName:self.titleFont}
                                                           context:nil].size;
-    NSLog(@"--%.3f",titleSize.width);
-
     return titleSize;
 }
 
@@ -236,8 +236,6 @@
     if (self.arrangeType == DGButtonArrangeTypeTitleInFrontOfTheImage ||
         self.arrangeType == DGButtonArrangeTypeImageInFrontOfTheTitle) {
         CGFloat width = self.contentView.bounds.size.width - self.imageSize.width;
-        NSLog(@"++%.3f",width);
-
         if (width >0)return width;
         return 0;
     }
@@ -255,9 +253,11 @@
 #pragma mark - set
 - (void)setImage:(UIImage *)image forState:(UIControlState)state{
     self.stateImages[@(state)] = image;
-    if (state == UIControlStateNormal) {
+    if ((state == UIControlStateNormal)||
+        (self.selected && state == UIControlStateSelected)) {
         self.imageView.image = image;
         
+        //设置默认imageView的大小为图片尺寸信息
         if (self.imageSize.height == 0 && self.imageSize.width == 0) {
             CGFloat imageWidth =(image.size.width < CGRectGetWidth(self.bounds))? image.size.width:CGRectGetWidth(self.bounds);
             CGFloat imageHeight = imageWidth * (image.size.width/image.size.height);
@@ -270,17 +270,33 @@
 
 - (void)setTitle:(NSString *)title forState:(UIControlState)state{
     self.stateTitles[@(state)] = title;
-    if (state == UIControlStateNormal) {
+    if ((state == UIControlStateNormal)||
+        (self.selected && state == UIControlStateSelected)){
         self.titleLabel.text = title;
     }
     [self updateFrame];
 }
 
-
 - (void)setTitleColor:(UIColor *)color forState:(UIControlState)state{
     self.stateTitleColors[@(state)] = color;
-    if (state == UIControlStateNormal) {
+    if ((state == UIControlStateNormal)||
+        (self.selected && state == UIControlStateSelected)){
         self.titleLabel.textColor = color;
+    }}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state{
+    self.stateBackgroundColors[@(state)] = backgroundColor;
+    if ((state == UIControlStateNormal)||
+        (self.selected && state == UIControlStateSelected)){
+        [self dg_setBackgroundColor:backgroundColor];
+    }
+}
+
+- (void)setAttributedTitle:(NSAttributedString *)title forState:(UIControlState)state{
+    self.stateAttributedStrings[@(state)] = title;
+    if ((state == UIControlStateNormal)||
+        (self.selected && state == UIControlStateSelected)){
+        self.titleLabel.attributedText = title;
     }
 }
 
@@ -296,6 +312,9 @@
 - (void)setArrangeType:(DGButtonArrangeType)arrangeType{
     _arrangeType = arrangeType;
 }
+
+#pragma mark - public
+
 
 #pragma mark - touch
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
@@ -314,6 +333,8 @@
         if(titleColor)self.titleLabel.textColor = titleColor;
         else self.titleLabel.alpha = 0.5;
         
+        UIColor *backgroundColor = self.stateBackgroundColors[@(UIControlStateHighlighted)];
+        if (backgroundColor) [self dg_setBackgroundColor:backgroundColor];
     }];
     
 }
@@ -331,12 +352,31 @@
 
 - (void)endTouch{
     [UIView animateWithDuration:self.touchAnimationDuration animations:^{
-        self.imageView.image = self.stateImages[@(UIControlStateNormal)];
-        self.titleLabel.text = self.stateTitles[@(UIControlStateNormal)];
-        self.titleLabel.textColor = self.stateTitleColors[@(UIControlStateNormal)];
+        
+        if (self.selected) {
+            if(self.stateImages[@(UIControlStateSelected)])self.imageView.image = self.stateImages[@(UIControlStateSelected)];
+            else self.imageView.image = self.stateImages[@(UIControlStateNormal)];
+            
+            if(self.stateTitles[@(UIControlStateSelected)])self.titleLabel.text = self.stateTitles[@(UIControlStateSelected)];
+            else self.titleLabel.text = self.stateTitles[@(UIControlStateNormal)];
+            
+            if(self.stateTitleColors[@(UIControlStateSelected)])self.titleLabel.textColor = self.stateTitleColors[@(UIControlStateSelected)];
+            else self.titleLabel.textColor = self.stateTitleColors[@(UIControlStateNormal)];
+            
+            if (self.stateBackgroundColors[@(UIControlStateSelected)])[self dg_setBackgroundColor:self.stateBackgroundColors[@(UIControlStateSelected)]];
+            else [self dg_setBackgroundColor: self.stateBackgroundColors[@(UIControlStateNormal)]];
+            
+        }else{
+            self.imageView.image = self.stateImages[@(UIControlStateNormal)];
+            self.titleLabel.text = self.stateTitles[@(UIControlStateNormal)];
+            self.titleLabel.textColor = self.stateTitleColors[@(UIControlStateNormal)];
+            [self dg_setBackgroundColor: self.stateBackgroundColors[@(UIControlStateNormal)]];
+        }
         
         self.titleLabel.alpha = 1.0f;
         self.imageView.alpha = 1.0f;
+        
+    } completion:^(BOOL finished) {
     }];
 }
 
@@ -345,26 +385,44 @@
     [super addTarget:target action:action forControlEvents:controlEvents];
 }
 
-- (void)setSelected:(BOOL)selected{
-    [super setSelected:selected];
-    
-    if (selected) {
-        if(self.stateImages[@(UIControlStateSelected)])self.imageView.image = self.stateImages[@(UIControlStateSelected)];
-        if(self.stateTitles[@(UIControlStateSelected)])self.titleLabel.text = self.stateTitles[@(UIControlStateSelected)];
-        if(self.stateTitleColors[@(UIControlStateSelected)])self.titleLabel.textColor = self.stateTitleColors[@(UIControlStateSelected)];
 
-    }else{
+- (void)setBackgroundColor:(UIColor *)backgroundColor{
+    [super setBackgroundColor:backgroundColor];
+    if (__changeBackgroundColorNormalValue) {
+        self.stateBackgroundColors[@(UIControlStateNormal)] =backgroundColor;
+    }
+}
+
+- (void)setEnabled:(BOOL)enabled{
+    [super setEnabled:enabled];
+    
+    if (enabled) {
         self.imageView.image = self.stateImages[@(UIControlStateNormal)];
         self.titleLabel.text = self.stateTitles[@(UIControlStateNormal)];
         self.titleLabel.textColor = self.stateTitleColors[@(UIControlStateNormal)];
+        [self dg_setBackgroundColor: self.stateBackgroundColors[@(UIControlStateNormal)]];
 
+    }else{
+        UIImage * image = self.stateImages[@(UIControlStateDisabled)];
+        if (image)self.imageView.image = image;
+        
+        NSString * title = self.stateTitles[@(UIControlStateDisabled)];
+        if (title) self.titleLabel.text = title;
+        
+        UIColor * titleColor = self.stateTitleColors[@(UIControlStateDisabled)];
+        if(titleColor)self.titleLabel.textColor = titleColor;
+        
+        UIColor *backgroundColor = self.stateBackgroundColors[@(UIControlStateDisabled)];
+        if (backgroundColor) [self dg_setBackgroundColor:backgroundColor];
     }
-
+    
 }
 
-- (void)sendAction:(SEL)action to:(nullable id)target forEvent:(nullable UIEvent *)event{
-    [super sendAction:action to:target forEvent:event];
+static bool __changeBackgroundColorNormalValue = YES;
+- (void)dg_setBackgroundColor:(UIColor *)backgroundColor{
+    __changeBackgroundColorNormalValue = NO;
+    self.backgroundColor = backgroundColor;
+    __changeBackgroundColorNormalValue = YES;
 }
-
 
 @end
