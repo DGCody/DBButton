@@ -415,7 +415,6 @@
         UIColor *backgroundColor = self.stateBackgroundColors[@(UIControlStateDisabled)];
         if (backgroundColor) [self dg_setBackgroundColor:backgroundColor];
     }
-    
 }
 
 static bool __changeBackgroundColorNormalValue = YES;
