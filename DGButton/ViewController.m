@@ -132,8 +132,38 @@
     [button6 addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
     [button6 setTitleColor:[UIColor colorWithWhite:0.9 alpha:1.0] forState:UIControlStateSelected];
     [button6 setBackgroundColor:[UIColor blackColor] forState:UIControlStateSelected];
+    
 
+    [button6 setAttributedTitle:self.attNormal forState:UIControlStateNormal];
+    [button6 setAttributedTitle:self.attSelected forState:UIControlStateSelected];
 }
+
+- (NSAttributedString *)attNormal{
+    
+    NSMutableAttributedString * s = [[NSAttributedString alloc] initWithString:@"选中状态按钮(selected = YES)"
+                                                                    attributes:@{NSFontAttributeName            :[UIFont systemFontOfSize:15],
+                                                                                 NSForegroundColorAttributeName :[UIColor grayColor]}].mutableCopy;
+    NSDictionary * dic =  @{NSFontAttributeName            :   [UIFont systemFontOfSize:15],
+                            NSUnderlineStyleAttributeName  :   @1,
+                            NSForegroundColorAttributeName :   [UIColor blueColor]
+                            };
+    [s addAttributes:dic range:NSMakeRange(6, s.length - 6)];
+    return s;
+}
+
+- (NSAttributedString *)attSelected{
+    
+    NSMutableAttributedString * s = [[NSAttributedString alloc] initWithString:@"选中状态按钮(selected = YES)"
+                                                                    attributes:@{NSFontAttributeName            :[UIFont systemFontOfSize:15],
+                                                                                 NSForegroundColorAttributeName :[UIColor grayColor]}].mutableCopy;
+    NSDictionary * dic =  @{NSFontAttributeName            :   [UIFont systemFontOfSize:15],
+                            NSUnderlineStyleAttributeName  :   @1,
+                            NSForegroundColorAttributeName :   [UIColor redColor]
+                            };
+    [s addAttributes:dic range:NSMakeRange(6, s.length - 6)];
+    return s;
+}
+
 
 - (void)btnAction:(DGButton *)sender{
         sender.selected = !sender.selected;

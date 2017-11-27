@@ -228,6 +228,13 @@
                                                           options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin
                                                        attributes:@{NSFontAttributeName:self.titleFont}
                                                           context:nil].size;
+    
+    if (self.stateAttributedStrings[@(UIControlStateNormal)]) {
+        [self.titleLabel sizeToFit];
+        titleSize = self.titleLabel.bounds.size;
+        if (titleSize.width > self.maxTitleWidth)titleSize.width = self.maxTitleWidth;
+    }
+
     return titleSize;
 }
 
@@ -297,7 +304,9 @@
     if ((state == UIControlStateNormal)||
         (self.selected && state == UIControlStateSelected)){
         self.titleLabel.attributedText = title;
+        self.titleLabel.text = title.string;
     }
+    [self updateFrame];
 }
 
 
@@ -313,7 +322,22 @@
     _arrangeType = arrangeType;
 }
 
+
 #pragma mark - public
+//默认时状态
+- (void)updateNormal{
+    self.imageView.image = self.stateImages[@(UIControlStateNormal)];
+    [self dg_setBackgroundColor: self.stateBackgroundColors[@(UIControlStateNormal)]];
+    
+    NSAttributedString * attString = self.stateAttributedStrings[@(UIControlStateNormal)];
+    if (!attString) {
+        self.titleLabel.text = self.stateTitles[@(UIControlStateNormal)];
+        self.titleLabel.textColor = self.stateTitleColors[@(UIControlStateNormal)];
+    }else{
+        self.titleLabel.attributedText = attString;
+    }
+    
+}
 
 
 #pragma mark - touch
@@ -326,15 +350,23 @@
         if (image)self.imageView.image = image;
         else self.imageView.alpha = 0.5;
         
-        NSString * title = self.stateTitles[@(UIControlStateHighlighted)];
-        if (title) self.titleLabel.text = title;
-        
-        UIColor * titleColor = self.stateTitleColors[@(UIControlStateHighlighted)];
-        if(titleColor)self.titleLabel.textColor = titleColor;
-        else self.titleLabel.alpha = 0.5;
-        
         UIColor *backgroundColor = self.stateBackgroundColors[@(UIControlStateHighlighted)];
         if (backgroundColor) [self dg_setBackgroundColor:backgroundColor];
+        
+        if (self.stateAttributedStrings[@(UIControlStateHighlighted)]) {
+            self.titleLabel.attributedText = self.stateAttributedStrings[@(UIControlStateHighlighted)];
+        }else{
+            if (!self.stateAttributedStrings[@(UIControlStateNormal)]) {
+                NSString * title = self.stateTitles[@(UIControlStateHighlighted)];
+                if (title) self.titleLabel.text = title;
+                
+                UIColor * titleColor = self.stateTitleColors[@(UIControlStateHighlighted)];
+                if(titleColor)self.titleLabel.textColor = titleColor;
+            }
+            else self.titleLabel.alpha = 0.5;
+        }
+        
+
     }];
     
 }
@@ -357,20 +389,28 @@
             if(self.stateImages[@(UIControlStateSelected)])self.imageView.image = self.stateImages[@(UIControlStateSelected)];
             else self.imageView.image = self.stateImages[@(UIControlStateNormal)];
             
-            if(self.stateTitles[@(UIControlStateSelected)])self.titleLabel.text = self.stateTitles[@(UIControlStateSelected)];
-            else self.titleLabel.text = self.stateTitles[@(UIControlStateNormal)];
-            
-            if(self.stateTitleColors[@(UIControlStateSelected)])self.titleLabel.textColor = self.stateTitleColors[@(UIControlStateSelected)];
-            else self.titleLabel.textColor = self.stateTitleColors[@(UIControlStateNormal)];
-            
             if (self.stateBackgroundColors[@(UIControlStateSelected)])[self dg_setBackgroundColor:self.stateBackgroundColors[@(UIControlStateSelected)]];
             else [self dg_setBackgroundColor: self.stateBackgroundColors[@(UIControlStateNormal)]];
             
+            NSAttributedString * attString = self.stateAttributedStrings[@(UIControlStateSelected)];
+            if (attString) {
+                self.titleLabel.attributedText = attString;
+            }else{
+                
+                attString = self.stateAttributedStrings[@(UIControlStateNormal)];
+                if (attString) {
+                    self.titleLabel.attributedText = attString;
+                }else{
+                    if(self.stateTitles[@(UIControlStateSelected)])self.titleLabel.text = self.stateTitles[@(UIControlStateSelected)];
+                    else self.titleLabel.text = self.stateTitles[@(UIControlStateNormal)];
+                    
+                    if(self.stateTitleColors[@(UIControlStateSelected)])self.titleLabel.textColor = self.stateTitleColors[@(UIControlStateSelected)];
+                    else self.titleLabel.textColor = self.stateTitleColors[@(UIControlStateNormal)];
+                }
+            }
+            
         }else{
-            self.imageView.image = self.stateImages[@(UIControlStateNormal)];
-            self.titleLabel.text = self.stateTitles[@(UIControlStateNormal)];
-            self.titleLabel.textColor = self.stateTitleColors[@(UIControlStateNormal)];
-            [self dg_setBackgroundColor: self.stateBackgroundColors[@(UIControlStateNormal)]];
+            [self updateNormal];
         }
         
         self.titleLabel.alpha = 1.0f;
@@ -397,23 +437,26 @@
     [super setEnabled:enabled];
     
     if (enabled) {
-        self.imageView.image = self.stateImages[@(UIControlStateNormal)];
-        self.titleLabel.text = self.stateTitles[@(UIControlStateNormal)];
-        self.titleLabel.textColor = self.stateTitleColors[@(UIControlStateNormal)];
-        [self dg_setBackgroundColor: self.stateBackgroundColors[@(UIControlStateNormal)]];
-
+        [self updateNormal];
     }else{
         UIImage * image = self.stateImages[@(UIControlStateDisabled)];
         if (image)self.imageView.image = image;
         
-        NSString * title = self.stateTitles[@(UIControlStateDisabled)];
-        if (title) self.titleLabel.text = title;
-        
-        UIColor * titleColor = self.stateTitleColors[@(UIControlStateDisabled)];
-        if(titleColor)self.titleLabel.textColor = titleColor;
-        
         UIColor *backgroundColor = self.stateBackgroundColors[@(UIControlStateDisabled)];
         if (backgroundColor) [self dg_setBackgroundColor:backgroundColor];
+        
+        NSAttributedString * attString = self.stateAttributedStrings[@(UIControlStateDisabled)];
+        if (attString) {
+            self.titleLabel.attributedText = attString;
+            
+        }else{
+            NSString * title = self.stateTitles[@(UIControlStateDisabled)];
+            if (title) self.titleLabel.text = title;
+            
+            UIColor * titleColor = self.stateTitleColors[@(UIControlStateDisabled)];
+            if(titleColor)self.titleLabel.textColor = titleColor;
+        }
+ 
     }
 }
 

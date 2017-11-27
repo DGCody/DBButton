@@ -49,7 +49,7 @@ typedef NS_ENUM(NSInteger, DGButtonAlignmentType){
 - (void)setTitle:(NSString *)title forState:(UIControlState)state;
 - (void)setTitleColor:(UIColor *)color forState:(UIControlState)state;
 - (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state;
-- (void)setAttributedTitle:(NSAttributedString *)title forState:(UIControlState)state;//待完善
+- (void)setAttributedTitle:(NSAttributedString *)title forState:(UIControlState)state;
 
 
 @end
